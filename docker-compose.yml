@@ -1,0 +1,19 @@
+# Creates a private network, redis being the dns name nad the api talking to redis:6379
+services:
+  api:
+    build: ./app
+    ports:
+      - "8000:8000"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis_data:/data
+# Redis data persists in a named volume redis_data
+volumes:
+  redis_data:
